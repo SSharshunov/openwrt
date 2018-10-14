@@ -1,0 +1,34 @@
+#
+# Copyright (C) 2018 OpenWrt.org
+#
+# This is free software, licensed under the GNU General Public License v2.
+# See /LICENSE for more information.
+#
+
+include $(TOPDIR)/rules.mk
+
+ARCH:=arm
+CPU_TYPE:=arm926ej-s
+BOARD:=hisilicon
+BOARDNAME:=Hisilicon HI35xx
+SUBTARGETS:=HI351XXV1 HI351XXV2 HI3516CV3
+
+FEATURES:=usb squashfs low_mem
+MAINTAINER:=ZigFisher (ZFT Lab.) <flyrouter@gmail.com>
+
+KERNEL_PATCHVER:=3.4.35
+#KERNEL_PATCHVER:=4.4
+
+include $(INCLUDE_DIR)/target.mk
+#DEFAULT_PACKAGES := $(filter-out ppp%,$(DEFAULT_PACKAGES)) \
+DEFAULT_PACKAGES += \
+		kmod-usb-core kmod-usb2 kmod-usb-ohci \
+		kmod-usb-storage kmod-fs-vfat kmod-nls-utf8 \
+		kmod-ledtrig-usbdev kmod-tun
+
+define Target/Description
+	Build firmware images for Hisilicon SoC based IPCam's.
+	Currently supports Xiong Mai (XM) and JVT based devices only.
+endef
+
+$(eval $(call BuildTarget))
